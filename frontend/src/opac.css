@@ -1,0 +1,305 @@
+/* ============================================================================
+   OPAC — patron-facing public catalogue
+   A warmer, book-forward surface that reuses the Marginalia tokens but breaks
+   from the staff console's dense operational rail/table layout.
+   ========================================================================== */
+
+.opac {
+  min-height: 100vh;
+  background:
+    radial-gradient(120% 60% at 50% -10%, var(--accent-soft) 0%, transparent 60%),
+    var(--bg);
+}
+
+/* ---- Header ----------------------------------------------------------- */
+.opac-top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--s5);
+  padding: var(--s4) clamp(var(--s4), 5vw, var(--s8));
+  background: oklch(100% 0 0 / 0.78);
+  backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+.opac-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  color: inherit;
+}
+.opac-brand-mark {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border-radius: 9px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px oklch(100% 0 0 / 0.14), var(--shadow-1);
+}
+.opac-brand-name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 18px;
+  line-height: 1;
+}
+.opac-brand-sub {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-top: 3px;
+}
+
+.opac-nav {
+  display: flex;
+  gap: 2px;
+}
+.opac-nav button {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: var(--r-sm);
+  font: 600 var(--step-0)/1 var(--font-body);
+  color: var(--muted);
+  transition: background 0.14s var(--ease), color 0.14s var(--ease);
+}
+.opac-nav button:hover { background: var(--surface-2); color: var(--fg); }
+.opac-nav button.active { background: var(--accent-soft); color: var(--accent-deep); }
+
+.opac-account {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+}
+.opac-whoami {
+  font: 600 var(--step--1)/1 var(--font-mono);
+  color: var(--accent-deep);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-line);
+  padding: 6px 10px;
+  border-radius: var(--r-pill);
+}
+.opac-staff-link {
+  font-size: var(--step--1);
+  color: var(--faint);
+  padding-left: var(--s2);
+  border-left: 1px solid var(--border);
+}
+.opac-staff-link:hover { color: var(--muted); }
+
+/* ---- Page / hero ------------------------------------------------------ */
+.opac-main { min-width: 0; }
+.opac-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: clamp(var(--s5), 4vw, var(--s8)) clamp(var(--s4), 5vw, var(--s8)) var(--s8);
+}
+
+.opac-hero { text-align: center; margin-bottom: var(--s7); }
+.opac-hero.compact { text-align: left; margin-bottom: var(--s5); }
+.opac-hero h1 { font-size: var(--step-5); line-height: 1.04; }
+.opac-hero p { margin: var(--s2) 0 var(--s5); font-size: var(--step-1); }
+
+.opac-search {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 6px 6px 6px var(--s5);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-pill);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+.opac-search:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+}
+.opac-search .ico { width: 20px; height: 20px; color: var(--muted); flex: none; }
+.opac-search input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font: 400 var(--step-1)/1 var(--font-body);
+  color: var(--fg);
+  padding: 12px 0;
+}
+
+.opac-filters {
+  display: inline-flex;
+  gap: var(--s2);
+  margin-top: var(--s4);
+}
+.opac-filters button {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: var(--r-pill);
+  font: 600 var(--step--1)/1 var(--font-body);
+  color: var(--muted);
+  transition: all 0.14s var(--ease);
+}
+.opac-filters button:hover { border-color: var(--border-strong); color: var(--fg); }
+.opac-filters button.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+.opac-results-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s4);
+  margin-bottom: var(--s4);
+  font-size: var(--step--1);
+  color: var(--muted);
+}
+.opac-flash { font-weight: 600; }
+.opac-flash.ok { color: var(--st-available-fg); }
+.opac-flash.err { color: var(--st-lost-fg); }
+
+/* ---- Result grid / book cards ----------------------------------------- */
+.opac-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--s5);
+}
+.book-card {
+  display: flex;
+  gap: var(--s4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-1);
+  padding: var(--s5);
+  transition: box-shadow 0.16s var(--ease), transform 0.16s var(--ease);
+}
+.book-card:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); }
+.book-spine {
+  flex: none;
+  width: 46px;
+  border-radius: var(--r-sm);
+  background: linear-gradient(160deg, var(--accent) 0%, var(--accent-deep) 100%);
+  color: var(--accent-ink);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  box-shadow: inset -3px 0 6px oklch(0% 0 0 / 0.18), inset 2px 0 0 oklch(100% 0 0 / 0.18);
+}
+.book-body { min-width: 0; flex: 1; }
+.book-title { font-size: var(--step-2); line-height: 1.15; }
+.book-author { color: var(--muted); font-size: var(--step-0); margin-top: 2px; }
+.book-avail { margin-top: var(--s3); }
+
+.edition-list {
+  list-style: none;
+  margin: var(--s4) 0 0;
+  padding: var(--s4) 0 0;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+.edition {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s3);
+  flex-wrap: wrap;
+  row-gap: var(--s2);
+}
+.edition-meta { display: flex; align-items: center; gap: var(--s2); min-width: 0; flex: 1 1 auto; }
+.edition-isbn { font-size: 11px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.edition-actions { display: flex; align-items: center; gap: var(--s3); flex: none; margin-left: auto; }
+.edition-free { font-size: var(--step--1); white-space: nowrap; }
+
+/* ---- Empty / lists (My library) --------------------------------------- */
+.opac-empty {
+  text-align: center;
+  padding: var(--s8) var(--s5);
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--r-lg);
+}
+.opac-empty.small { padding: var(--s6) var(--s5); }
+.opac-empty .btn { margin-top: var(--s4); }
+
+.opac-section { margin-top: var(--s6); }
+.opac-section-title { font-size: var(--step-2); margin-bottom: var(--s3); }
+.opac-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-1);
+  overflow: hidden;
+}
+.opac-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  padding: var(--s4) var(--s5);
+  border-bottom: 1px solid var(--border);
+}
+.opac-row:last-child { border-bottom: 0; }
+.opac-row-end { display: flex; align-items: center; gap: var(--s3); flex: none; }
+
+/* ---- Sign-in modal ---------------------------------------------------- */
+.opac-modal-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: oklch(24% 0.018 240 / 0.4);
+  backdrop-filter: blur(2px);
+  display: grid;
+  place-items: center;
+  padding: var(--s5);
+}
+.opac-modal {
+  width: 100%;
+  max-width: 380px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-2);
+  padding: var(--s6);
+}
+.opac-modal h2 { font-size: var(--step-3); margin-bottom: var(--s2); }
+.opac-error {
+  font-size: var(--step--1);
+  color: var(--st-lost-fg);
+  background: var(--st-lost-bg);
+  border-radius: var(--r-sm);
+  padding: 8px 10px;
+}
+
+@media (max-width: 680px) {
+  .opac-top { gap: var(--s3); flex-wrap: wrap; }
+  .opac-nav { order: 3; width: 100%; }
+}

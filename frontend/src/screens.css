@@ -1,0 +1,173 @@
+/* Screen-specific layout from the Marginalia prototype screens
+   (circulation-desk.html and catalog.html <style> blocks). */
+
+/* ---- Circulation Desk -------------------------------------------------- */
+.desk {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: var(--s5);
+  align-items: start;
+}
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s4);
+  margin-bottom: var(--s5);
+}
+.session {
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  padding: var(--s4) var(--s5);
+  border-radius: var(--r-md);
+  background: linear-gradient(180deg, var(--accent-soft), oklch(97.5% 0.015 178));
+  border: 1px solid var(--accent-line);
+}
+.session.empty {
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+.session .face {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: var(--r-pill);
+  background: var(--accent);
+  color: var(--accent-ink);
+  display: grid;
+  place-items: center;
+  font: 600 16px/1 var(--font-mono);
+}
+.session.empty .face {
+  background: var(--surface-3);
+  color: var(--faint);
+}
+.session .who {
+  font: 600 var(--step-1)/1.2 var(--font-mono);
+}
+.hold-card {
+  display: flex;
+  gap: var(--s3);
+  align-items: center;
+  padding: var(--s4) var(--s5);
+  border-bottom: 1px solid var(--border);
+}
+.hold-card:last-child {
+  border-bottom: 0;
+}
+.hold-card .q {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  border-radius: var(--r-sm);
+  background: var(--st-hold-bg);
+  color: var(--st-hold-fg);
+  display: grid;
+  place-items: center;
+  font: 700 12px/1 var(--font-mono);
+}
+@media (max-width: 1100px) {
+  .desk { grid-template-columns: 1fr; }
+  .stat-row { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ---- Catalog ----------------------------------------------------------- */
+.cat {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: var(--s5);
+  align-items: start;
+}
+.toolbar {
+  display: flex;
+  gap: var(--s3);
+  align-items: center;
+  margin-bottom: var(--s5);
+  flex-wrap: wrap;
+}
+.toolbar .scan {
+  flex: 1;
+  min-width: 240px;
+}
+.work-row {
+  cursor: pointer;
+}
+.work-row .twist {
+  transition: transform 0.15s var(--ease);
+  color: var(--faint);
+  width: 16px;
+  height: 16px;
+}
+.work-row.open .twist {
+  transform: rotate(90deg);
+  color: var(--accent);
+}
+.detail td {
+  background: var(--surface-2);
+  padding: 0 !important;
+  border-bottom: 1px solid var(--border-strong);
+}
+.detail-inner {
+  padding: var(--s4) var(--s5) var(--s5) 52px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+.manif {
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  overflow: hidden;
+}
+.manif-head {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  padding: 11px var(--s4);
+}
+.manif-head .meta {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--muted);
+}
+.copies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s2);
+  padding: 0 var(--s4) var(--s4) 44px;
+}
+.copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 10px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--border);
+  font: 600 11.5px/1 var(--font-mono);
+  background: var(--surface);
+}
+.copy .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: var(--r-pill);
+}
+.copy-state {
+  margin-left: 4px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font: 600 11px/1 var(--font-mono);
+  cursor: pointer;
+  border-radius: var(--r-sm);
+  padding: 1px 2px;
+}
+.copy-state:hover {
+  color: var(--accent);
+}
+.copy .da { background: var(--st-available-fg); }
+.copy .dl { background: var(--st-loan-fg); }
+.copy .dh { background: var(--st-hold-fg); }
+.copy .dr { background: var(--st-repair-fg); }
+@media (max-width: 1040px) {
+  .cat { grid-template-columns: 1fr; }
+}
