@@ -53,6 +53,33 @@ staff console (`#desk`, `#catalog`) or the patron OPAC (`#/opac`, `#/opac/me`).
 The OPAC is layered entirely over the existing endpoints; it adds no backend
 code. See [SPEC.md](SPEC.md) §6.
 
+### SOLID
+
+The implementation follows the SOLID principles:
+
+- **Single responsibility** — a class has one reason to change. A use case only
+  orchestrates (`CheckOut`); the rules it enforces belong to the entities
+  (`Patron.ensure_can_borrow`), and mapping errors to HTTP belongs to the
+  boundary (`interface/api/errors.py`).
+- **Open/closed** — behaviour extends without editing what already works. Loan
+  rules are injected data behind a port (`LoanPolicyProvider`), so a new
+  category × material rule is added, not patched in.
+- **Liskov** — any adapter is substitutable for the port it implements; nothing
+  depends on which concrete implementation it was handed (a fake `Clock` or the
+  in-matrix policy provider drops into the use cases unchanged in tests).
+- **Interface segregation** — many small, purpose-built interfaces over one wide
+  one, so a caller depends only on the methods it uses (one repository per
+  aggregate — `LoanRepository`, `HoldRepository`, … — not a fat DAO).
+- **Dependency inversion** — both sides depend on abstractions. The domain and
+  application define the ports (`UnitOfWork`, the repository protocols);
+  infrastructure implements them (`SqlAlchemyUnitOfWork`), and the wiring happens
+  at a single composition root (`interface/api/deps.py`).
+
+Known trade-offs: the rule for handing a returned copy to the next reservation
+in the queue is duplicated across a few use cases (`CheckIn`, `CancelHold`,
+`ExpireReadyHolds`) rather than living in one domain service, and `UnitOfWork`
+exposes every repository rather than only the ones a given use case needs.
+
 ## Tech
 
 - Backend: Python, FastAPI, SQLAlchemy, Pydantic, Alembic.
