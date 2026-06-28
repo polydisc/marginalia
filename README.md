@@ -1,8 +1,8 @@
 # Marginalia
 
-[![CI](https://github.com/igarash1/marginalia/actions/workflows/ci.yml/badge.svg)](https://github.com/igarash1/marginalia/actions/workflows/ci.yml)
-[![backend coverage](https://codecov.io/gh/igarash1/marginalia/branch/main/graph/badge.svg?flag=backend)](https://codecov.io/gh/igarash1/marginalia?flags%5B0%5D=backend)
-[![frontend coverage](https://codecov.io/gh/igarash1/marginalia/branch/main/graph/badge.svg?flag=frontend)](https://codecov.io/gh/igarash1/marginalia?flags%5B0%5D=frontend)
+[![CI](https://github.com/polydisc/marginalia/actions/workflows/ci.yml/badge.svg)](https://github.com/polydisc/marginalia/actions/workflows/ci.yml)
+[![backend coverage](https://codecov.io/gh/polydisc/marginalia/branch/main/graph/badge.svg?flag=backend)](https://codecov.io/gh/polydisc/marginalia?flags%5B0%5D=backend)
+[![frontend coverage](https://codecov.io/gh/polydisc/marginalia/branch/main/graph/badge.svg?flag=frontend)](https://codecov.io/gh/polydisc/marginalia?flags%5B0%5D=frontend)
 
 A library system prototype: cataloguing, patrons, and circulation. It has two faces — a
 **staff console** (the circulation desk and catalog management) and a
