@@ -73,7 +73,7 @@ added, not patched in.
 #### Liskov substitution
 
 Any adapter is substitutable for the port it implements; nothing depends on which
-concrete implementation it was handed. 
+concrete implementation it was handed.
 
 #### Interface segregation
 
@@ -104,7 +104,7 @@ exposes every repository rather than only the ones a given use case needs.
 
 ## Security posture
 
-This is a portfolio project, not deployable production system. Only the basic feaatures are in place. Authentication, audit logging, etc are missing.
+This is a portfolio project, not a deployable production system. Only the basic features are in place. Authentication, audit logging, etc. are missing.
 
 ## Documentation
 
