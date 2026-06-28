@@ -1,0 +1,26 @@
+# Two independent test surfaces uploaded under their own flags, so coverage is
+# tracked per side (and each flag carries forward when only the other changed).
+coverage:
+  status:
+    project:
+      default:
+        informational: true
+      frontend:
+        flags: [frontend]
+        informational: true
+      backend:
+        flags: [backend]
+        informational: true
+
+flag_management:
+  individual_flags:
+    - name: frontend
+      paths: [frontend/src]
+      carryforward: true
+    - name: backend
+      paths: [backend/app]
+      carryforward: true
+
+comment:
+  layout: "header, flags, files"
+  require_changes: false

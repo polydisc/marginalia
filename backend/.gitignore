@@ -11,8 +11,11 @@ __pycache__/
 # SQLite database
 *.db
 
-# Test cache
+# Test cache / coverage
 .pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
 
 # Build artifacts
 *.egg-info/
