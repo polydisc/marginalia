@@ -26,61 +26,74 @@ I used this project to practice a few things end to end.
 
 ## Architecture
 
-The code follows Clean Architecture. Dependencies point inward. The domain and
-the application layers import no web or database library, and a test enforces
-that.
+The code follows Clean Architecture. Dependencies point inward.
 
-```mermaid
-flowchart LR
-  SPA["React SPA"] -->|HTTP, same origin| IF["Interface<br/>routers, schemas"]
-  IF --> APP["Application<br/>use cases"]
-  APP --> DOM["Domain<br/>entities, policy, services"]
-  APP --> PORTS["Repository ports"]
-  INFRA["Infrastructure<br/>SQLAlchemy, Alembic"] -. implements .-> PORTS
-  INFRA --> DB[("SQLite / Postgres")]
-```
+<img src="./docs/marginalia-clean-architecture.svg" alt="Clean Architecture layers" width="300">
 
-- **Domain** — entities, the loan policy, and domain services. Plain Python.
-- **Application** — use cases over repository ports.
-- **Infrastructure** — SQLAlchemy repositories and Alembic migrations.
-- **Interface** — FastAPI routers, Pydantic schemas, and the React SPA.
+- **UI / DB (Frameworks & Drivers)** — the React SPA, the SQLite/Postgres database, and
+  Alembic migrations.
+- **Controller / Gateway (Interface Adapters)** — FastAPI routers and Pydantic schemas,
+  SQLAlchemy repositories on the way out.
+- **Use Cases (Application Business Rules)** — use cases over repository ports.
+- **Entities (Enterprise Business Rules)** — domain entities, the loan policy, and domain
+  services.
 
 The interface layer wires the ports to their adapters at startup. FastAPI serves
 the built SPA, so the client and the API share one origin.
 
-The SPA carries both faces in one build: the hash route picks the shell — the
-staff console (`#desk`, `#catalog`) or the patron OPAC (`#/opac`, `#/opac/me`).
-The OPAC is layered entirely over the existing endpoints; it adds no backend
-code. See [SPEC.md](SPEC.md) §6.
-
 ### SOLID
 
-The implementation follows the SOLID principles:
+The implementation follows the SOLID principles.
 
-- **Single responsibility** — a class has one reason to change. A use case only
-  orchestrates (`CheckOut`); the rules it enforces belong to the entities
-  (`Patron.ensure_can_borrow`), and mapping errors to HTTP belongs to the
-  boundary (`interface/api/errors.py`).
-- **Open/closed** — behaviour extends without editing what already works. Loan
-  rules are injected data behind a port (`LoanPolicyProvider`), so a new
-  category × material rule is added, not patched in.
-- **Liskov** — any adapter is substitutable for the port it implements; nothing
-  depends on which concrete implementation it was handed (a fake `Clock` or the
-  in-matrix policy provider drops into the use cases unchanged in tests).
-- **Interface segregation** — many small, purpose-built interfaces over one wide
-  one, so a caller depends only on the methods it uses (one repository per
-  aggregate — `LoanRepository`, `HoldRepository`, … — not a fat DAO).
-- **Dependency inversion** — both sides depend on abstractions. The domain and
-  application define the ports (`UnitOfWork`, the repository protocols);
-  infrastructure implements them (`SqlAlchemyUnitOfWork`), and the wiring happens
-  at a single composition root (`interface/api/deps.py`).
+#### Single responsibility
+
+A class has one reason to change. Checking out a copy has three kinds of reason
+to change, and each lives in its own place, so a change to one never touches the
+others:
+
+| What changes | Where it lives |
+| --- | --- |
+| Steps of the operation (orchestration) | use case — `CheckOut` |
+| Borrowing rules (overdue, loan limits) | entity — `Patron.ensure_can_borrow` |
+| Error mapping to HTTP | boundary — `interface/api/errors.py` |
+
+#### Open/closed
+
+Behaviour extends without editing what already works. Loan rules are injected
+data behind a port (`LoanPolicyProvider`), so a new category × material rule is
+added, not patched in.
+
+| | Role | Here |
+| --- | --- | --- |
+| **Consumer** | Depends only on the port | `CheckOut` (use case) — calls `policy_for(...)` |
+| **Port** | Contract | `LoanPolicyProvider` — "give me the policy for a (category, material) pair" |
+| **Adapter** | Concrete implementation | `StaticLoanPolicyProvider` — looks the pair up in a rule matrix |
+
+
+#### Liskov substitution
+
+Any adapter is substitutable for the port it implements; nothing depends on which
+concrete implementation it was handed.
+
+#### Interface segregation
+
+Many small, purpose-built interfaces over one wide one, so a caller depends only
+on the methods it uses for less coupling: one repository per aggregate (`LoanRepository`,
+`HoldRepository`, …), not a fat DAO.
+
+#### Dependency inversion
+
+Both sides depend on abstractions. The domain and application define the ports
+(`UnitOfWork`, the repository protocols); infrastructure implements them
+(`SqlAlchemyUnitOfWork`), and the wiring happens at a single composition root
+(`interface/api/deps.py`).
 
 Known trade-offs: the rule for handing a returned copy to the next reservation
 in the queue is duplicated across a few use cases (`CheckIn`, `CancelHold`,
 `ExpireReadyHolds`) rather than living in one domain service, and `UnitOfWork`
 exposes every repository rather than only the ones a given use case needs.
 
-## Tech
+## Technology
 
 - Backend: Python, FastAPI, SQLAlchemy, Pydantic, Alembic.
 - Frontend: React, TypeScript, Vite.
@@ -91,17 +104,7 @@ exposes every repository rather than only the ones a given use case needs.
 
 ## Security posture
 
-This is a portfolio/demo system, not a production auth model. The app is meant
-to run as a same-origin single service; no permissive CORS is enabled, inputs
-are bounded at the API boundary, SQLAlchemy expression APIs are used instead of
-string-built SQL, and database constraints backstop race-prone invariants such
-as open loans and open holds. Patron OPAC sign-in is deliberately card-number
-only and staff screens are not protected by real staff authentication in v1.
-
-Before exposing it beyond a trusted demo environment, add production staff auth,
-patron authentication, request rate limiting, audit logging, and deployment
-secret management. Calling this out explicitly keeps reviewers from mistaking a
-scoped demo boundary for a hidden production claim.
+This is a portfolio project, not a deployable production system. Only the basic features are in place. Authentication, audit logging, etc. are missing.
 
 ## Documentation
 
