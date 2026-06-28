@@ -59,9 +59,25 @@ cd ../backend && uv run uvicorn app.main:create_app --factory   # serves the SPA
 ## Checks
 
 ```sh
-npm run typecheck   # tsc --noEmit
-npm run test:e2e    # Playwright — builds the SPA, boots uvicorn (all-in-one), drives the flows
+npm run typecheck      # tsc --noEmit
+npm test               # Vitest — unit + component tests (jsdom), no backend needed
+npm run test:coverage  # Vitest with V8 coverage (text + lcov in coverage/)
+npm run test:e2e       # Playwright — builds the SPA, boots uvicorn (all-in-one), drives the flows
 ```
+
+Unit and component tests live next to their subjects as `*.test.ts(x)` and run
+under Vitest + Testing Library in jsdom — fast, with the backend stubbed
+(`fetch` / the `api` module are mocked), so no uvicorn is required. They cover
+the pure logic (`routes`, `notify`, the `api` request/error mapping) and the
+OPAC components (`SignIn`, `Browse`, `MyLibrary`, `useCardSession`). The
+Playwright suite stays the end-to-end check against the real backend.
+
+Coverage (the `frontend` flag on the [Codecov badge](../README.md)) is scoped to
+exactly that unit-tested surface. The large staff screens (`Catalog`,
+`CirculationDesk`) and the app/shell wiring are exercised by Playwright instead,
+so they're excluded from the unit-coverage number (see `coverage.exclude` in
+`vite.config.ts`) rather than counted as untested — the badge stays an honest
+measure of what the unit suite actually drives.
 
 The first E2E run needs the browser once: `npx playwright install chromium`. The
 Playwright config's `webServer` builds `dist/` and starts the backend, so the
@@ -71,7 +87,10 @@ checks plus backend `pytest` run in CI (`.github/workflows/ci.yml`).
 ## Storybook
 
 The design system (`system.css`) has a living style guide in Storybook — see
-`src/stories/` and the `*.stories.tsx` components.
+`src/stories/` and the `*.stories.tsx` components. Alongside the `Foundations`
+and `ActivityLog` stories, the OPAC screens (`SignIn`, `Browse`, `MyLibrary`)
+have stories that fake the session and stub the API (`src/stories/helpers.tsx`),
+so each renders its real populated / empty / error states with no backend.
 
 ```sh
 npm run storybook        # dev server on http://localhost:6006

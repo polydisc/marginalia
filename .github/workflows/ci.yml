@@ -22,7 +22,14 @@ jobs:
       - name: Lint (ruff)
         run: uv run --no-sync ruff check app tests
       - name: Run tests
-        run: uv run --no-sync pytest -q
+        run: uv run --no-sync pytest -q --cov=app --cov-report=xml
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: backend/coverage.xml
+          flags: backend
+          disable_search: true
 
   e2e:
     name: E2E (Playwright, all-in-one)
@@ -64,8 +71,8 @@ jobs:
           path: frontend/playwright-report
           retention-days: 7
 
-  storybook:
-    name: Storybook build
+  frontend:
+    name: Frontend (typecheck, unit, Storybook)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -80,6 +87,16 @@ jobs:
       - name: Typecheck
         working-directory: frontend
         run: npm run typecheck
+      - name: Unit tests + coverage (Vitest)
+        working-directory: frontend
+        run: npm run test:coverage
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: frontend/coverage/lcov.info
+          flags: frontend
+          disable_search: true
       - name: Build Storybook
         working-directory: frontend
         run: npm run build-storybook

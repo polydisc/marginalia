@@ -88,8 +88,14 @@ LMS_DATABASE_URL="postgresql+psycopg://user:pass@localhost:5432/library" \
 ## Test
 
 ```sh
-uv run pytest
+uv run pytest                              # unit + integration + API tests
+uv run pytest --cov=app --cov-report=term-missing   # with coverage
 ```
+
+Coverage feeds the `backend` flag on the [Codecov badge](../README.md); CI
+uploads `--cov-report=xml`. Abstract `Protocol`/ABC bodies and `TYPE_CHECKING`
+imports are excluded as structural (see `[tool.coverage.report]` in
+`pyproject.toml`).
 
 ## Security and validation
 
