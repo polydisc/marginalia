@@ -1,7 +1,7 @@
 """Repository ports (Protocols).
 
 Dependency-Inversion (SOLID-D): the application depends on these abstractions;
-concrete SQLAlchemy implementations live in infrastructure. Interface-
+concrete SQLAlchemy implementations live in the adapter ring. Interface-
 Segregation (SOLID-I): one focused repository per aggregate, not a fat DAO.
 """
 

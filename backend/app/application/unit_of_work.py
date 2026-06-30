@@ -1,7 +1,7 @@
 """Unit-of-Work port.
 
 One transactional boundary that exposes the repositories the use cases need.
-Concrete implementation (SQLAlchemy) lives in infrastructure; use cases depend
+Concrete implementation (SQLAlchemy) lives in the adapter ring; use cases depend
 only on this abstraction.
 """
 

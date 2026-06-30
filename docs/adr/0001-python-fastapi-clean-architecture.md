@@ -20,7 +20,7 @@ by default" shape are unchanged.
   discipline** rather than a framework freebie — this is what "Clean
   Architecture 徹底" means here. Concretely: domain entities are plain Python
   classes that import neither FastAPI (Pydantic) nor the ORM; Pydantic lives at
-  the I/O boundary, the ORM in the infrastructure layer.
+  the I/O boundary, the ORM in the adapter layer.
 - SOLID is nested inside this: the Dependency-Inversion principle is the
   dependency rule applied at the macro scale; Interface-Segregation keeps
   repositories split by use (e.g. `ItemRepository`, `LoanRepository`) rather

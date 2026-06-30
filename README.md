@@ -88,7 +88,7 @@ on the methods it uses for less coupling: one repository per aggregate (`LoanRep
 #### Dependency inversion
 
 Both sides depend on abstractions. The domain and application define the ports
-(`UnitOfWork`, the repository protocols); infrastructure implements them
+(`UnitOfWork`, the repository protocols); the adapter ring implements them
 (`SqlAlchemyUnitOfWork`), and the wiring happens at a single composition root
 (`interface/api/deps.py`).
 

@@ -24,7 +24,7 @@ it is derived from the existence of an open Loan.
 
 ## Consequences
 
-- The invariant lives partly in infrastructure (the migration), so a reader of
+- The invariant lives partly in the adapter ring (the migration), so a reader of
   the domain layer alone won't see the full guarantee — this ADR is the
   signpost. Do not "fix" it by removing the constraint in favour of a pure
   domain check.

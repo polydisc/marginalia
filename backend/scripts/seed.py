@@ -43,14 +43,14 @@ from app.application.use_cases.patrons import (  # noqa: E402
     RegisterPatron,
     SuspendPatron,
 )
-from app.infrastructure.config import Settings  # noqa: E402
-from app.infrastructure.db.engine import (  # noqa: E402
+from app.adapter.config import Settings  # noqa: E402
+from app.adapter.db.engine import (  # noqa: E402
     make_engine,
     make_session_factory,
 )
-from app.infrastructure.db.migrations import upgrade_to_head  # noqa: E402
-from app.infrastructure.db.unit_of_work import SqlAlchemyUnitOfWork  # noqa: E402
-from app.infrastructure.policy_provider import (  # noqa: E402
+from app.adapter.db.migrations import upgrade_to_head  # noqa: E402
+from app.adapter.db.unit_of_work import SqlAlchemyUnitOfWork  # noqa: E402
+from app.adapter.policy_provider import (  # noqa: E402
     StaticLoanPolicyProvider,
 )
 from app.domain.value_objects import (  # noqa: E402

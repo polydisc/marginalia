@@ -19,7 +19,7 @@ framework (no `fastapi`, `pydantic`, or `sqlalchemy`).
   nothing outward.
 - **application** — use cases, plain-dataclass DTOs, and the Unit-of-Work port.
   Imports `domain` only.
-- **infrastructure** — SQLAlchemy 2.0 models, ORM↔domain mappers, repository and
+- **adapter** — SQLAlchemy 2.0 models, ORM↔domain mappers, repository and
   Unit-of-Work implementations, config, clock, and the loan-policy provider
   (SQLite by default). Imports inward only.
 - **interface** — FastAPI routers, Pydantic schemas, exception handlers, and the
@@ -41,7 +41,7 @@ app/
     use_cases/       # catalog, patrons, circulation
     dto.py
     unit_of_work.py
-  infrastructure/
+  adapter/
     db/              # base, engine, models, mappers, repositories, unit_of_work
     config.py        # Settings (LMS_ env prefix; sqlite default)
     clock.py
@@ -133,7 +133,7 @@ cd backend
 # Apply all pending migrations (also runs automatically on app startup)
 uv run alembic upgrade head
 
-# After changing app/infrastructure/db/models.py, generate a migration
+# After changing app/adapter/db/models.py, generate a migration
 uv run alembic revision --autogenerate -m "describe the change"
 
 # Roll back one revision, or all the way to an empty DB

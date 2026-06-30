@@ -6,7 +6,7 @@ deciders: igarash1
 touch_paths:
   - backend/app/domain/
   - backend/app/application/
-  - backend/app/infrastructure/
+  - backend/app/adapter/
   - backend/app/interface/
   - backend/tests/
 ---
@@ -50,12 +50,12 @@ the invariants are enforced and tested.
 backend/app/
   domain/          # entities, value objects, policy, services, repository PORTS, errors
   application/     # use cases, DTOs, Unit-of-Work port
-  infrastructure/  # SQLAlchemy models + mappers + repo/UoW implementations (SQLite)
+  adapter/         # SQLAlchemy models + mappers + repo/UoW implementations (SQLite)
   interface/       # FastAPI routers, Pydantic schemas, composition root (DI)
   main.py          # app factory
 ```
 
-`domain` imports nothing outward. `application` imports `domain`. `infrastructure`
+`domain` imports nothing outward. `application` imports `domain`. `adapter`
 and `interface` import inward only. Wiring happens in the composition root
 (`interface/api/deps.py`).
 
@@ -79,7 +79,7 @@ Value objects / enums: `ItemState{available,in_repair,lost,withdrawn}`,
 
 `LoanPolicy` (value object) keyed by `(PatronCategory, MaterialType)` →
 `{loan_period_days, renewal_limit, max_concurrent_loans, not_for_loan}`. Supplied
-via a `LoanPolicyProvider` port; default matrix lives in infrastructure/config.
+via a `LoanPolicyProvider` port; default matrix lives in adapter/config.
 
 Repository **ports** (Protocols — DIP/ISP): `WorkRepository`,
 `ManifestationRepository`, `ItemRepository`, `PatronRepository`,
@@ -123,7 +123,7 @@ stays framework-free.
 Pydantic schemas live only here. Domain errors map to HTTP 4xx via exception
 handlers (e.g. `ItemNotAvailable` → 409, `PatronCannotBorrow` → 422).
 
-### Persistence (infrastructure)
+### Persistence (adapter)
 
 SQLAlchemy 2.0 ORM models mirror entities in their own module, mapped to/from
 domain objects explicitly (no ORM objects leak past the repository). SQLite by

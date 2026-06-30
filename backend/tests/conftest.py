@@ -9,6 +9,11 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.pool import StaticPool
 
+from app.adapter.db import models  # noqa: F401  (register tables)
+from app.adapter.db.base import Base
+from app.adapter.db.engine import make_session_factory
+from app.adapter.db.unit_of_work import SqlAlchemyUnitOfWork
+from app.adapter.policy_provider import StaticLoanPolicyProvider
 from app.application.use_cases.catalog import (
     AddItem,
     CatalogManifestation,
@@ -16,11 +21,6 @@ from app.application.use_cases.catalog import (
 )
 from app.application.use_cases.patrons import RegisterPatron
 from app.domain.value_objects import MaterialType, PatronCategory
-from app.infrastructure.db import models  # noqa: F401  (register tables)
-from app.infrastructure.db.base import Base
-from app.infrastructure.db.engine import make_session_factory
-from app.infrastructure.db.unit_of_work import SqlAlchemyUnitOfWork
-from app.infrastructure.policy_provider import StaticLoanPolicyProvider
 
 FIXED_TODAY = date(2026, 6, 26)
 

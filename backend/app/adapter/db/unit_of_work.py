@@ -4,6 +4,14 @@ from __future__ import annotations
 
 from sqlalchemy.orm import Session, sessionmaker
 
+from app.adapter.db.repositories import (
+    SqlAlchemyHoldRepository,
+    SqlAlchemyItemRepository,
+    SqlAlchemyLoanRepository,
+    SqlAlchemyManifestationRepository,
+    SqlAlchemyPatronRepository,
+    SqlAlchemyWorkRepository,
+)
 from app.domain.repositories import (
     HoldRepository,
     ItemRepository,
@@ -11,14 +19,6 @@ from app.domain.repositories import (
     ManifestationRepository,
     PatronRepository,
     WorkRepository,
-)
-from app.infrastructure.db.repositories import (
-    SqlAlchemyHoldRepository,
-    SqlAlchemyItemRepository,
-    SqlAlchemyLoanRepository,
-    SqlAlchemyManifestationRepository,
-    SqlAlchemyPatronRepository,
-    SqlAlchemyWorkRepository,
 )
 
 
