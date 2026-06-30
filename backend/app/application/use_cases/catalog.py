@@ -22,6 +22,8 @@ from app.domain.value_objects import ItemState, MaterialType
 
 
 class CreateWork:
+    """Create a Work: the abstract title at the head of the spine."""
+
     def __init__(self, uow: UnitOfWork) -> None:
         self._uow = uow
 
@@ -33,6 +35,8 @@ class CreateWork:
 
 
 class CatalogManifestation:
+    """Catalogue a Manifestation: a concrete edition of a Work."""
+
     def __init__(self, uow: UnitOfWork) -> None:
         self._uow = uow
 
@@ -68,6 +72,8 @@ class CatalogManifestation:
 
 
 class AddItem:
+    """Add an Item: a physical, barcoded copy of a Manifestation."""
+
     def __init__(self, uow: UnitOfWork) -> None:
         self._uow = uow
 
@@ -92,6 +98,8 @@ class AddItem:
 
 
 class UpdateWork:
+    """Edit a Work's bibliographic fields (title, author)."""
+
     def __init__(self, uow: UnitOfWork) -> None:
         self._uow = uow
 
