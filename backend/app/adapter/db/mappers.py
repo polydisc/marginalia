@@ -6,6 +6,14 @@ honest by repository round-trip integration tests.
 
 from __future__ import annotations
 
+from app.adapter.db.models import (
+    HoldModel,
+    ItemModel,
+    LoanModel,
+    ManifestationModel,
+    PatronModel,
+    WorkModel,
+)
 from app.domain.entities import Hold, Item, Loan, Manifestation, Patron, Work
 from app.domain.value_objects import (
     HoldStatus,
@@ -13,14 +21,6 @@ from app.domain.value_objects import (
     MaterialType,
     PatronCategory,
     PatronStatus,
-)
-from app.infrastructure.db.models import (
-    HoldModel,
-    ItemModel,
-    LoanModel,
-    ManifestationModel,
-    PatronModel,
-    WorkModel,
 )
 
 

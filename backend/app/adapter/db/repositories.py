@@ -12,9 +12,8 @@ from datetime import date
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from app.domain.entities import Hold, Item, Loan, Manifestation, Patron, Work
-from app.infrastructure.db import mappers
-from app.infrastructure.db.models import (
+from app.adapter.db import mappers
+from app.adapter.db.models import (
     HoldModel,
     ItemModel,
     LoanModel,
@@ -22,6 +21,7 @@ from app.infrastructure.db.models import (
     PatronModel,
     WorkModel,
 )
+from app.domain.entities import Hold, Item, Loan, Manifestation, Patron, Work
 
 
 class SqlAlchemyWorkRepository:

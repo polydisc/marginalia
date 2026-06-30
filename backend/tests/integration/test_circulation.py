@@ -82,7 +82,7 @@ def test_checkin_with_no_open_loan_raises(uow, clock):
 def test_partial_unique_index_is_the_concurrency_backstop(session_factory):
     """ADR 0003: the DB rejects a second *open* loan even bypassing the domain,
     but allows a new loan once the previous one is returned."""
-    from app.infrastructure.db.models import LoanModel
+    from app.adapter.db.models import LoanModel
 
     session = session_factory()
     session.add(

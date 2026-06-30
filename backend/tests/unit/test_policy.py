@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from datetime import date
 
+from app.adapter.policy_provider import StaticLoanPolicyProvider
 from app.domain.value_objects import MaterialType, PatronCategory
-from app.infrastructure.policy_provider import StaticLoanPolicyProvider
 
 
 def test_general_book_policy_due_date():

@@ -14,9 +14,9 @@ from alembic.config import Config
 from alembic.script import ScriptDirectory
 from sqlalchemy import create_engine, inspect
 
-import app.infrastructure.db.models  # noqa: F401  (register tables)
+import app.adapter.db.models  # noqa: F401  (register tables)
 from alembic import command
-from app.infrastructure.db.base import Base
+from app.adapter.db.base import Base
 
 # backend/  (contains alembic.ini and the alembic/ dir)
 _BACKEND_ROOT = Path(__file__).resolve().parents[3]

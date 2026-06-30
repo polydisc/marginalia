@@ -11,7 +11,7 @@ from datetime import date, datetime
 from sqlalchemy import ForeignKey, Index, text
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.infrastructure.db.base import Base
+from app.adapter.db.base import Base
 
 
 class WorkModel(Base):

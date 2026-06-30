@@ -1,7 +1,7 @@
 """Read-side query port.
 
 Projections for the UI that intentionally bypass the write aggregates (a hold
-shelf, a patron's loans, the catalog tree). Implemented in infrastructure with
+shelf, a patron's loans, the catalog tree). Implemented in the adapter ring with
 joins; the interface depends only on this abstraction.
 """
 

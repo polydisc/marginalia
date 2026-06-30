@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import date, datetime
 
-from app.infrastructure.db.models import HoldModel
+from app.adapter.db.models import HoldModel
 from app.tasks import run_expire_holds
 
 

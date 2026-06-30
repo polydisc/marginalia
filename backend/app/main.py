@@ -12,12 +12,12 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session, sessionmaker
 
-from app.infrastructure.clock import SystemClock
-from app.infrastructure.config import Settings
-from app.infrastructure.db import models  # noqa: F401  (register tables)
-from app.infrastructure.db.engine import make_engine, make_session_factory
-from app.infrastructure.db.migrations import upgrade_to_head
-from app.infrastructure.policy_provider import StaticLoanPolicyProvider
+from app.adapter.clock import SystemClock
+from app.adapter.config import Settings
+from app.adapter.db import models  # noqa: F401  (register tables)
+from app.adapter.db.engine import make_engine, make_session_factory
+from app.adapter.db.migrations import upgrade_to_head
+from app.adapter.policy_provider import StaticLoanPolicyProvider
 from app.interface.api.errors import add_exception_handlers
 from app.interface.api.routers import catalog, circulation, items, patrons
 

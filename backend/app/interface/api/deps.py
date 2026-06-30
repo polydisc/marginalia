@@ -9,6 +9,8 @@ from __future__ import annotations
 
 from fastapi import Depends, Request
 
+from app.adapter.db.queries import SqlAlchemyQueryService
+from app.adapter.db.unit_of_work import SqlAlchemyUnitOfWork
 from app.application.use_cases.catalog import (
     AddItem,
     CatalogManifestation,
@@ -34,8 +36,6 @@ from app.application.use_cases.patrons import (
 )
 from app.domain.clock import Clock
 from app.domain.policy import LoanPolicyProvider
-from app.infrastructure.db.queries import SqlAlchemyQueryService
-from app.infrastructure.db.unit_of_work import SqlAlchemyUnitOfWork
 
 
 def get_uow(request: Request) -> SqlAlchemyUnitOfWork:

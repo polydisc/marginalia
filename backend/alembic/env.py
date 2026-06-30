@@ -7,9 +7,9 @@ from alembic import context
 
 # Register all ORM tables on Base.metadata so autogenerate/upgrade see the full
 # schema. Importing models has the side effect of mapping every table.
-from app.infrastructure.config import Settings
-from app.infrastructure.db.base import Base
-import app.infrastructure.db.models  # noqa: F401  (register tables)
+from app.adapter.config import Settings
+from app.adapter.db.base import Base
+import app.adapter.db.models  # noqa: F401  (register tables)
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

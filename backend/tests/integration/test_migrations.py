@@ -5,8 +5,8 @@ from __future__ import annotations
 
 from sqlalchemy import create_engine, inspect, text
 
-from app.infrastructure.db.base import Base
-from app.infrastructure.db.migrations import upgrade_to_head
+from app.adapter.db.base import Base
+from app.adapter.db.migrations import upgrade_to_head
 
 # Added by 8f6b4adfd12f; a legacy DB stamped straight to head would never get it.
 _HOLD_INDEX = "uq_open_hold_per_patron_manifestation"

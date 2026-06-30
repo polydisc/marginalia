@@ -11,6 +11,14 @@ from collections.abc import Sequence
 from sqlalchemy import select
 from sqlalchemy.orm import Session, sessionmaker
 
+from app.adapter.db.models import (
+    HoldModel,
+    ItemModel,
+    LoanModel,
+    ManifestationModel,
+    PatronModel,
+    WorkModel,
+)
 from app.application.dto import (
     CatalogItemView,
     CatalogManifestationView,
@@ -21,14 +29,6 @@ from app.application.dto import (
     ReadyHoldView,
 )
 from app.domain.clock import Clock
-from app.infrastructure.db.models import (
-    HoldModel,
-    ItemModel,
-    LoanModel,
-    ManifestationModel,
-    PatronModel,
-    WorkModel,
-)
 
 
 def _derive_availability(

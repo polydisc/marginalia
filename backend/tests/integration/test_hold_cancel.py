@@ -4,6 +4,7 @@ from datetime import date
 
 import pytest
 
+from app.adapter.db.models import HoldModel
 from app.application.use_cases.circulation import (
     CancelHold,
     CheckIn,
@@ -13,7 +14,6 @@ from app.application.use_cases.circulation import (
 from app.application.use_cases.patrons import RegisterPatron
 from app.domain.errors import HoldNotFound, HoldNotOpen
 from app.domain.value_objects import PatronCategory
-from app.infrastructure.db.models import HoldModel
 from tests.conftest import FixedClock, seed
 
 CLOCK = FixedClock(date(2026, 6, 26))

@@ -5,6 +5,7 @@ from datetime import date, datetime
 import pytest
 from sqlalchemy.exc import IntegrityError
 
+from app.adapter.db.models import HoldModel
 from app.application.use_cases.catalog import AddItem, GetItemAvailability
 from app.application.use_cases.circulation import (
     CheckIn,
@@ -16,7 +17,6 @@ from app.application.use_cases.circulation import (
 from app.application.use_cases.patrons import RegisterPatron
 from app.domain.errors import DuplicateHold, ItemNotAvailable, RenewalBlockedByHold
 from app.domain.value_objects import HoldStatus, PatronCategory
-from app.infrastructure.db.models import HoldModel
 from tests.conftest import FixedClock, seed
 
 

@@ -13,12 +13,12 @@ from __future__ import annotations
 
 from sqlalchemy.orm import Session, sessionmaker
 
+from app.adapter.clock import SystemClock
+from app.adapter.config import Settings
+from app.adapter.db.engine import make_engine, make_session_factory
+from app.adapter.db.unit_of_work import SqlAlchemyUnitOfWork
 from app.application.dto import ExpireHoldsResult
 from app.application.use_cases.circulation import ExpireReadyHolds
-from app.infrastructure.clock import SystemClock
-from app.infrastructure.config import Settings
-from app.infrastructure.db.engine import make_engine, make_session_factory
-from app.infrastructure.db.unit_of_work import SqlAlchemyUnitOfWork
 
 
 def run_expire_holds(
